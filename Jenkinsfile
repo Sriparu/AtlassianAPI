@@ -49,14 +49,14 @@ pipeline {
         stage('Build & Compile') {
             steps {
                 echo 'Compiling source code...'
-                sh 'mvn clean compile test-compile -q'
+                bat 'mvn clean compile test-compile -q'
             }
         }
 
         stage('Run API Tests') {
             steps {
                 echo 'Running TestNG API tests...'
-                sh 'mvn test -Dsurefire.suiteXmlFiles=src/test/resources/testng.xml'
+                bat 'mvn test -Dsurefire.suiteXmlFiles=src/test/resources/testng.xml'
             }
             post {
                 always {
