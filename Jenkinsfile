@@ -60,25 +60,12 @@ pipeline {
             }
             post {
                 always {
-                    // Publish TestNG XML results
-                    testNG(
-                    testResults: 'target/surefire-reports/*.xml',
-                    reportFilenamePattern: '**/testng-results.xml'
-                     )
-
-                    // Publish ExtentReports HTML (if configured)
-                    publishHTML(target: [
-                        allowMissing         : true,
-                        alwaysLinkToLastBuild: true,
-                        keepAll              : true,
-                        reportDir            : 'reports',
-                        reportFiles          : '*.html',
-                        reportName           : 'Extent API Report'
-                    ])
-                }
-            }
+                    post {
+        always {
+            junit 'target/surefire-reports/*.xml'
         }
     }
+}
 
     post {
         success {
