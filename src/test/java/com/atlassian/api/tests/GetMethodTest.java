@@ -8,13 +8,13 @@ import org.testng.annotations.Test;
 import static io.restassured.RestAssured.given;
 
 /**
- * GetMethodTest demonstrates HTTP GET requests to https://parusonly.atlassian.net
- * using Basic Authentication configured in BaseAPI.
+ * GetMethodTest demonstrates HTTP GET requests to
+ * https://parusonly.atlassian.net using Basic Authentication configured in
+ * BaseAPI.
  *
- * Atlassian REST API v3 examples:
- *  - GET /rest/api/3/myself          -> returns the currently authenticated user
- *  - GET /rest/api/3/project         -> returns all projects
- *  - GET /rest/api/3/issue/{issueKey} -> returns a specific Jira issue
+ * Atlassian REST API v3 examples: - GET /rest/api/3/myself -> returns the
+ * currently authenticated user - GET /rest/api/3/project -> returns all
+ * projects - GET /rest/api/3/issue/{issueKey} -> returns a specific Jira issue
  */
 public class GetMethodTest extends BaseAPI {
 
@@ -27,9 +27,9 @@ public class GetMethodTest extends BaseAPI {
     public void testGetCurrentUser() {
         Response response = given()
                 .spec(requestSpec)
-            .when()
+                .when()
                 .get("/rest/api/3/myself")
-            .then()
+                .then()
                 .log().body()
                 .extract().response();
 
@@ -54,9 +54,9 @@ public class GetMethodTest extends BaseAPI {
     public void testGetAllProjects() {
         Response response = given()
                 .spec(requestSpec)
-            .when()
+                .when()
                 .get("/rest/api/3/project")
-            .then()
+                .then()
                 .log().body()
                 .extract().response();
 
@@ -72,13 +72,14 @@ public class GetMethodTest extends BaseAPI {
     // Test 3: GET /rest/api/3/serverInfo
     //         Returns server information (no project/issue keys needed).
     // ----------------------------------------------------------------
-    @Test(description = "GET - Retrieve Jira server info")
+    //@Test(description = "GET - Retrieve Jira server info") 
+    @Test(groups = {"api"})
     public void testGetServerInfo() {
         Response response = given()
                 .spec(requestSpec)
-            .when()
+                .when()
                 .get("/rest/api/3/serverInfo")
-            .then()
+                .then()
                 .log().body()
                 .extract().response();
 
@@ -104,9 +105,9 @@ public class GetMethodTest extends BaseAPI {
 
         Response response = given()
                 .spec(requestSpec)
-            .when()
+                .when()
                 .get("/rest/api/3/issue/" + issueKey)
-            .then()
+                .then()
                 .log().body()
                 .extract().response();
 
