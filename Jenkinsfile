@@ -2,12 +2,11 @@ pipeline {
     agent any
 
     tools {
-        maven '3.9.12'   // Must match the name configured in Jenkins Global Tool Config
-        jdk   'jdk-25.0.2'      // Must match the name configured in Jenkins Global Tool Config
+        maven '3.9.12'   // Must match Jenkins Global Tool Config
+        jdk   'jdk-25.0.2'
     }
 
     environment {
-        // Pull credentials from Jenkins Credential Store — never hardcode secrets
         ATLASSIAN_USERNAME  = credentials('ATLASSIAN_USERNAME')
         ATLASSIAN_API_TOKEN = credentials('ATLASSIAN_API_TOKEN')
     }
@@ -24,7 +23,7 @@ pipeline {
         stage('Inject Credentials') {
             steps {
                 echo 'Injecting credentials into config.properties...'
- 
+
                 withCredentials([
                     string(credentialsId: 'ATLASSIAN_USERNAME', variable: 'ATLASSIAN_USERNAME'),
                     string(credentialsId: 'ATLASSIAN_API_TOKEN', variable: 'ATLASSIAN_API_TOKEN')
@@ -45,7 +44,7 @@ pipeline {
                 }
             }
         }
-        
+
         stage('Build & Compile') {
             steps {
                 echo 'Compiling source code...'
@@ -60,12 +59,12 @@ pipeline {
             }
             post {
                 always {
-                    post {
-        always {
-            junit 'target/surefire-reports/*.xml'
+                    // Publish test results using JUnit publisher
+                    junit 'target/surefire-reports/*.xml'
+                }
+            }
         }
     }
-}
 
     post {
         success {
@@ -82,5 +81,3 @@ pipeline {
         }
     }
 }
-  }
-        
