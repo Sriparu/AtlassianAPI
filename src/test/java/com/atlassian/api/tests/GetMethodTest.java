@@ -23,7 +23,8 @@ public class GetMethodTest extends BaseAPI {
     //         Verifies that Basic Auth is working and the current
     //         authenticated user details are returned (status 200).
     // ----------------------------------------------------------------
-    @Test(description = "GET - Verify authenticated user details")
+    //@Test(description = "GET - Verify authenticated user details")
+    @Test(groups = {"api"})
     public void testGetCurrentUser() {
         Response response = given()
                 .spec(requestSpec)
@@ -100,7 +101,8 @@ public class GetMethodTest extends BaseAPI {
     // Test 4: GET /rest/api/3/issue/{issueKey}
     //         Replace PROJ-1 with an actual issue key from your project.
     // ----------------------------------------------------------------
-    @Test(description = "GET - Retrieve a specific Jira issue by key")
+    //@Test(description = "GET - Retrieve a specific Jira issue by key")
+    @Test(groups = {"api"})
     public void testGetIssueByKey() {
         String issueKey = "PROJ-1"; // TODO: Replace with a valid issue key
 
