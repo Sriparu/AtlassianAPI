@@ -50,7 +50,8 @@ public class GetMethodTest extends BaseAPI {
     // Test 2: GET /rest/api/3/project
     //         Returns a list of all Jira projects accessible to the user.
     // ----------------------------------------------------------------
-    @Test(description = "GET - Retrieve all Jira projects")
+    // @Test(description = "GET - Retrieve all Jira projects")
+    @Test(groups = {"api"})
     public void testGetAllProjects() {
         Response response = given()
                 .spec(requestSpec)
@@ -72,7 +73,7 @@ public class GetMethodTest extends BaseAPI {
     // Test 3: GET /rest/api/3/serverInfo
     //         Returns server information (no project/issue keys needed).
     // ----------------------------------------------------------------
-    //@Test(description = "GET - Retrieve Jira server info") 
+    //@Test(description = "GET - Retrieve Jira server info")
     @Test(groups = {"api"})
     public void testGetServerInfo() {
         Response response = given()

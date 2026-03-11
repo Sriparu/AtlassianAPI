@@ -4,6 +4,11 @@
 <suite name="Atlassian API Test Suite" verbose="2">
 
     <test name="GET Method Tests">
+        <groups>
+            <run>
+                <include name="api"/>
+            </run>
+        </groups>
         <classes>
             <class name="com.atlassian.api.tests.GetMethodTest"/>
         </classes>

@@ -10,18 +10,17 @@ import io.restassured.specification.RequestSpecification;
 import org.testng.annotations.BeforeClass;
 
 /**
- * BaseAPI sets up REST Assured configuration with:
- *  - Base URL: https://parusonly.atlassian.net/
- *  - Basic Authentication (username + password from config.properties)
- *  - Default headers and logging
+ * BaseAPI sets up REST Assured configuration with: - Base URL:
+ * https://parusonly.atlassian.net/ - Basic Authentication (username + password
+ * from config.properties) - Default headers and logging
  */
 public class BaseAPI {
 
     protected static RequestSpecification requestSpec;
 
-    @BeforeClass
+    @BeforeClass(alwaysRun = true)
     public void setupBaseConfig() {
-        String baseUrl  = ConfigReader.get("base.url");
+        String baseUrl = ConfigReader.get("base.url");
         String username = ConfigReader.get("auth.username");
         String password = ConfigReader.get("auth.password");
 
