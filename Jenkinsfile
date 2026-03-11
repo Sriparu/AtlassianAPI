@@ -61,8 +61,10 @@ pipeline {
             post {
                 always {
                     // Publish TestNG XML results
-                    testNG results: 'target/surefire-reports/*.xml',
-                           reportFilenamePattern: '**/testng-results.xml'
+                    testNG(
+                    testResults: 'target/surefire-reports/*.xml',
+                    reportFilenamePattern: '**/testng-results.xml'
+                     )
 
                     // Publish ExtentReports HTML (if configured)
                     publishHTML(target: [
