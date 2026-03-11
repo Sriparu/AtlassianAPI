@@ -24,17 +24,28 @@ pipeline {
         stage('Inject Credentials') {
             steps {
                 echo 'Injecting credentials into config.properties...'
-                // Overwrites config.properties at runtime with real credentials
-                // The committed config.properties can contain placeholder values
-                sh """
-                    sed -i 's|auth.username=.*|auth.username=${ATLASSIAN_USERNAME}|' \\
-                        src/main/resources/config.properties
-                    sed -i 's|auth.password=.*|auth.password=${ATLASSIAN_API_TOKEN}|' \\
-                        src/main/resources/config.properties
-                """
+ 
+                withCredentials([
+                    string(credentialsId: 'ATLASSIAN_USERNAME', variable: 'ATLASSIAN_USERNAME'),
+                    string(credentialsId: 'ATLASSIAN_API_TOKEN', variable: 'ATLASSIAN_API_TOKEN')
+                ]) {
+                    script {
+                        if (isUnix()) {
+                            sh """
+                                sed -i 's|auth.username=.*|auth.username=${ATLASSIAN_USERNAME}|' src/main/resources/config.properties
+                                sed -i 's|auth.password=.*|auth.password=${ATLASSIAN_API_TOKEN}|' src/main/resources/config.properties
+                            """
+                        } else {
+                            bat """
+                                powershell -Command "(Get-Content 'src/main/resources/config.properties') -replace 'auth.username=.*', 'auth.username=%ATLASSIAN_USERNAME%' | Set-Content 'src/main/resources/config.properties'"
+                                powershell -Command "(Get-Content 'src/main/resources/config.properties') -replace 'auth.password=.*', 'auth.password=%ATLASSIAN_API_TOKEN%' | Set-Content 'src/main/resources/config.properties'"
+                            """
+                        }
+                    }
+                }
             }
         }
-
+        
         stage('Build & Compile') {
             steps {
                 echo 'Compiling source code...'
