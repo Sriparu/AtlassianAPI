@@ -54,8 +54,11 @@ pipeline {
 
         stage('Run API Tests') {
             steps {
-                echo 'Running TestNG API tests...'
-                bat 'mvn test -Dgroups=api'
+                // Use bat for Windows agent
+        bat """
+            REM Ensure Maven cleans and compiles first
+            mvn clean test -Dgroups=api -Dsurefire.suiteXmlFiles="src\\test\\resources\\testng.xml"
+        """
             }
             post {
                 always {
@@ -64,7 +67,6 @@ pipeline {
                 }
             }
         }
-    }
 
     post {
         success {
