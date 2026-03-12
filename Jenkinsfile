@@ -55,7 +55,7 @@ pipeline {
         stage('Run API Tests') {
             steps {
                 echo 'Running TestNG API tests...'
-                bat 'mvn test -Dgroups=api -Dsurefire.suiteXmlFiles=src/test/resources/testng.xml'
+                bat 'mvn test -Dgroups=api'
             }
             post {
                 always {
